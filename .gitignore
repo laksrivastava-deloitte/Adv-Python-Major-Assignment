@@ -1,1 +1,5 @@
 project_env
+resources/__pycache__
+models/__pycache__
+__pycache__
+data.db
