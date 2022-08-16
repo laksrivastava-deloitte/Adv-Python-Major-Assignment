@@ -5,9 +5,7 @@ import datetime
 import time
 from flask import g
 from db import db
-
-
-from resources.user import UserData,UserLogin,UserList
+from resources.item import ItemData,ItemList
 
 
 app = Flask(__name__)
@@ -33,10 +31,10 @@ def after_request_time(response):
     response.headers["X-TIME-TO-EXECUTE"] = f"{time_diff} ms."
     return response
 
-api.add_resource(UserData,'/register')
-api.add_resource(UserLogin,'/login')
-api.add_resource(UserList,'/users')
+api.add_resource(ItemData,'/item')
+api.add_resource(ItemList,'/items')
+# api.add_resource(ItemListSorted,'/items/<string:order>')
 
 if __name__=='__main__':
     db.init_app(app)
-    app.run(port=5001, debug=True)
+    app.run(port=5002, debug=True)

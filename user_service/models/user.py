@@ -55,8 +55,12 @@ class UserModel(db.Model):
 
         
         SECRET_KEY = 'Lakshya Srivastava Project'
-        data = jwt.decode(token,SECRET_KEY)
-        current_user = UserModel.find_by_username(data['name'])
+        try:
+            data = jwt.decode(token,SECRET_KEY)
+            current_user = UserModel.find_by_username(data['name'])
+        except:
+            result['msg']={'message' : 'Token is invalid!'}, 401
+            return result
 
         if(current_user is None):
             result['msg']={'message' : 'Token is invalid!'}, 401
