@@ -16,12 +16,16 @@ class ItemModel(db.Model):
     # total_person_rated=db.Column(db.String)
     # total_person_rated = db.Column(MutableList.as_mutable(pickleType),default=[])
 
+    category_id=db.Column(db.Integer,db.ForeignKey('category.id'))
+    category=db.relationship('CategoryModel')
+
     # def __init__(self,name,item_count,rating,price,total_person_rated=""):
-    def __init__(self,name,item_count,rating,price):
+    def __init__(self,name,item_count,rating,price,category_id):
         self.name=name
         self.item_count=item_count
         self.rating=rating
         self.price=price
+        self.category_id=category_id
         # self.total_person_rated=total_person_rated
 
     @classmethod
@@ -42,7 +46,7 @@ class ItemModel(db.Model):
         db.session.commit()
 
     def json(self):
-        return {'id':self.id,'name':self.name,'rating':self.rating,'price':self.price,'item_count':self.item_count}
+        return {'id':self.id,'name':self.name,'rating':self.rating,'price':self.price,'item_count':self.item_count,'category_id':self.category_id}
 
     # def get_total_person_rated(self):
     #     return self.total_person_rated
@@ -52,4 +56,4 @@ class ItemModel(db.Model):
 
 
     def __str__(self):
-        return f"id:{self.id}, name:{self.name}, rating:{self.rating}, price:{self.price}, item_count:{self.item_count}"
+        return f"id:{self.id}, name:{self.name}, rating:{self.rating}, price:{self.price}, item_count:{self.item_count}, category_id:{self.category_id}"
