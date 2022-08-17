@@ -1,5 +1,6 @@
 from flask_restful import Resource,request
 from models.item import ItemModel
+# from models.category import CategoryModel
 
 class ItemData(Resource):
 
@@ -52,8 +53,12 @@ class ItemList(Resource):
         try:
             data=request.get_json()
             inputparams=data.keys()
+            # if('category' in inputparams):
+            #     items=CategoryModel.find_by_name(data['category'])
+            #     print(items)
+            # else:
             items=[item.json() for item in ItemModel.query.all()]
-            if set(inputparams).issubset({"filterBy","filterValue","sortBy","sortDescending"}):
+            if set(inputparams).issubset({"filterBy","filterValue","sortBy","sortDescending",'category'}):
 
                 if "filterBy" in inputparams:
                     if "filterValue" not in inputparams:
@@ -76,3 +81,15 @@ class ItemList(Resource):
                 return {'message':'Invalid body input'},400
         except:
             return {'message':'Invalid key value pair in body'},400
+
+class ReduceItemCount(Resource):
+    def get(self,name,quantity):
+        item=ItemModel.find_by_name(name)
+        if (item and item.item_count>=quantity):
+            item.item_count=item.item_count-quantity
+            item.save_to_db()
+            return {'item':item.json()},200
+        elif item:
+            return {'message':'Given quantity is greater than actual quantity,hence failed'},400
+        else:
+            return {'message':'Item not found'},400

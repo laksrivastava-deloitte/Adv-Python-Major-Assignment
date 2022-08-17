@@ -5,7 +5,8 @@ import datetime
 import time
 from flask import g
 from db import db
-from resources.item import ItemData,ItemList
+from resources.category import CategoryData, CategoryList
+from resources.item import ItemData,ItemList,ReduceItemCount
 
 
 app = Flask(__name__)
@@ -31,9 +32,13 @@ def after_request_time(response):
     response.headers["X-TIME-TO-EXECUTE"] = f"{time_diff} ms."
     return response
 
+api.add_resource(CategoryData,'/category')
+api.add_resource(CategoryList,'/categories')
 api.add_resource(ItemData,'/item')
 api.add_resource(ItemList,'/items')
-# api.add_resource(ItemListSorted,'/items/<string:order>')
+api.add_resource(ReduceItemCount,'/decreaseItemCount/<string:name>/<int:quantity>')
+
+
 
 if __name__=='__main__':
     db.init_app(app)
