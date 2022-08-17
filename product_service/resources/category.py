@@ -16,10 +16,10 @@ class CategoryData(Resource):
 
         return {'message':'Category created successfully.','data':category.json()},201
 
+class SingleCategory(Resource):
     #Category Deletion
-    def delete(self):
-        data=request.get_json()
-        category=CategoryModel.find_by_name(data['name'])
+    def delete(self,name):
+        category=CategoryModel.find_by_name(name)
         if category:
             for item in category.items:
                 item.delete_to_db()
@@ -28,12 +28,12 @@ class CategoryData(Resource):
         return {'message':'Failed to delete,category not found'},400
 
     #Single category detail
-    def get(self):
-        data=request.get_json()
-        category=CategoryModel.find_by_name(data['name'])
+    def get(self,name):
+        category=CategoryModel.find_by_name(name)
         if category:
             return {'category':category.json()},200
         return {'message':'category not found'},400
+
 
 class CategoryList(Resource):
     def get(self):

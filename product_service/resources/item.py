@@ -30,19 +30,19 @@ class ItemData(Resource):
         item.save_to_db()
         return {'message':'Item updates successfully','data':item.json()},200
 
+class SingleItem(Resource):
+
     #Item Deletion
-    def delete(self):
-        data=request.get_json()
-        item=ItemModel.find_by_name(data['name'])
+    def delete(self,name):
+        item=ItemModel.find_by_name(name)
         if item:
             item.delete_to_db()
             return {'message':'Item deleted successfully'},200
         return {'message':'Failed to delete,item not found'},400
 
     #Single Item detail
-    def get(self):
-        data=request.get_json()
-        item=ItemModel.find_by_name(data['name'])
+    def get(self,name):
+        item=ItemModel.find_by_name(name)
         if item:
             return {'item':item.json()},200
         return {'message':'Item not found'},400
