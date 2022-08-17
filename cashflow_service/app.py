@@ -6,6 +6,7 @@ import time
 from flask import g
 from db import db
 from resources.cart import CartData,CartDataList,CartSingleItem
+from resources.payment import PaymentData,PaymentDataList,PaymentSingleItem     
 
 
 app = Flask(__name__)
@@ -34,6 +35,9 @@ def after_request_time(response):
 api.add_resource(CartData,'/cartdata')
 api.add_resource(CartDataList,'/cartdata/<int:user_id>')
 api.add_resource(CartSingleItem,'/cartdata/<int:user_id>/<int:product_id>')
+api.add_resource(PaymentData,'/paymentdata')
+api.add_resource(PaymentDataList,'/paymentdata/<int:user_id>')
+api.add_resource(PaymentSingleItem,'/paymentdata/<int:user_id>/<int:product_id>')
 
 
 

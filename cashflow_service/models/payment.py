@@ -1,4 +1,5 @@
 from db import db
+from sqlalchemy.sql import func
 
 class PaymentModel(db.Model):
     __tablename__='payment'
@@ -7,11 +8,11 @@ class PaymentModel(db.Model):
     user_id=db.Column(db.Integer)
     product_id=db.Column(db.Integer)
     category_id=db.Column(db.Integer)
-    data_time=db.Column(db.DateTime)
+    date_time=db.Column(db.DateTime(timezone=True),server_default=func.now())
     quantity=db.Column(db.Integer)
     amt_paid=db.Column(db.Integer)
     net_total=db.Column(db.Integer)
-    discount=db.Column(db.Integer)
+    discount=db.Column(db.Float)
     promocode=db.Column(db.String(30))
     
 
@@ -21,16 +22,21 @@ class PaymentModel(db.Model):
         self.category_id=category_id
         self.quantity=quantity
         self.amt_paid=amt_paid
-        self.user_id=user_id
-        self.user_id=user_id
-        self.user_id=user_id
+        self.net_total=net_total
+        self.discount=discount
+        self.promocode=promocode
 
     def json(self):
-        return {'id':self.id,'user_id':self.user_id,'category_id':self.category_id,'product_id':self.product_id,'quantity':self.quantity,'amt_paid':self.amt_paid,'net_total':self.net_total,'discount':self.discount,'promocode':self.promocode}
+        return {'id':self.id,'user_id':self.user_id,'category_id':self.category_id,'product_id':self.product_id,'quantity':self.quantity,'amt_paid':self.amt_paid,'net_total':self.net_total,'discount':self.discount,'promocode':self.promocode,'data_time':str(self.date_time)}
 
     @classmethod
-    def find_by_userid(cls,user_id):
-        return cls.query.filter_by(user_id=user_id)
+    def find_by_userid_and_productid(cls,userid,productid):
+        return cls.query.filter_by(user_id=userid,product_id=productid).first()
+
+    @classmethod
+    def find_by_userid(cls,userid):
+        return cls.query.filter_by(user_id=userid)
+
 
     @classmethod
     def find_by_id(cls,_id):

@@ -11,22 +11,7 @@ class CartData(Resource):
 
         cart = CartModel(**data)
         cart.save_to_db()
-        return {'message':'Item successfully added to cart','data':cart.json()},201
-
-    #Cart Single item Deletion
-    def delete(self):
-        data=request.get_json()
-        params=data.keys()
-        if('user_id' in params and 'product_id' in params):
-            cart_data=CartModel.find_by_userid_and_productid(data['user_id'],data['product_id'])
-            if cart_data:
-                cart_data.delete_to_db()
-                return {'message':'Cart Item deleted successfully'},200
-            else:
-                return {'message':'Item not found'},400
-        return {'message':'Invalid Input'},400
-
-    
+        return {'message':'Item successfully added to cart','data':cart.json()},201  
 
 
 class CartDataList(Resource):
