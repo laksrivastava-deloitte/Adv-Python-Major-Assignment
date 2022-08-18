@@ -6,7 +6,8 @@ import time
 from flask import g
 from db import db
 from resources.cart import CartData,CartDataList,CartSingleItem
-from resources.payment import PaymentData,PaymentDataList,PaymentSingleItem     
+from resources.payment import PaymentData,PaymentDataList,SinglePayment
+from resources.payment_child import PaymentDataChild
 
 
 app = Flask(__name__)
@@ -37,7 +38,8 @@ api.add_resource(CartDataList,'/cartdata/<int:user_id>')
 api.add_resource(CartSingleItem,'/cartdata/<int:user_id>/<int:product_id>')
 api.add_resource(PaymentData,'/paymentdata')
 api.add_resource(PaymentDataList,'/paymentdata/<int:user_id>')
-api.add_resource(PaymentSingleItem,'/paymentdata/<int:user_id>/<int:product_id>')
+api.add_resource(PaymentDataChild,'/paymentdatachild')
+api.add_resource(SinglePayment,'/singlepayment/<int:_id>')
 
 
 

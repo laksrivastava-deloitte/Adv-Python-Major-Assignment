@@ -38,7 +38,7 @@ api.add_resource(CategoryList,'/categories')
 api.add_resource(ItemData,'/newItem')
 api.add_resource(SingleItem,'/item/<string:name>')
 api.add_resource(ItemList,'/items')
-api.add_resource(ReduceItemCount,'/decreaseItemCount/<string:name>/<int:quantity>')
+api.add_resource(ReduceItemCount,'/decreaseItemCount/<int:_id>/<int:quantity>')
 
 
 

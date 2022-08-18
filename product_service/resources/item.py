@@ -90,8 +90,8 @@ class ItemList(Resource):
             return {'message':'Invalid key value pair in body'},400
 
 class ReduceItemCount(Resource):
-    def get(self,name,quantity):
-        item=ItemModel.find_by_name(name)
+    def get(self,_id,quantity):
+        item=ItemModel.find_by_id(_id)
         if (item and item.item_count>=quantity):
             item.item_count=item.item_count-quantity
             item.save_to_db()
