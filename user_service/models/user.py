@@ -35,7 +35,7 @@ class UserModel(db.Model):
         db.session.commit()
 
     def json(self):
-        return {'username':self.username,'password':self.password,'is_admin':self.is_admin}
+        return {'username':self.username,'password':self.password,'is_admin':self.is_admin,'id':self.id}
 
     def __str__(self):
         return f"username:{self.username}, password:{self.password}, is_admin:{self.is_admin}"

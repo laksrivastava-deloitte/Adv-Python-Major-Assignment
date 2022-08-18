@@ -41,6 +41,15 @@ class UserData(Resource):
         token_result['value'].delete_to_db()
         return {'message':'User deleted successfully'}
 
+    #Get User
+    def get(self):
+        token_result=UserModel.validate_token()
+        if(not token_result['pass']):
+            return token_result['msg']
+        # print(token_result)
+        return token_result['value'].json(),200
+
+
 class UserLogin(Resource):
     #User Login
     def post(self):

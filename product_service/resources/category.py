@@ -29,7 +29,8 @@ class SingleCategory(Resource):
 
     #Single category detail
     def get(self,name):
-        category=CategoryModel.find_by_name(name)
+        _id=int(name)
+        category=CategoryModel.find_by_id(_id)
         if category:
             return {'category':category.json()},200
         return {'message':'category not found'},400

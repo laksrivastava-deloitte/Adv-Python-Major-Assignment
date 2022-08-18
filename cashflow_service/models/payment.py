@@ -16,7 +16,7 @@ class PaymentModel(db.Model):
     promocode=db.Column(db.String(30))
     
 
-    def __init__(self,user_id,product_id,category_id,quantity,amt_paid,net_total,discount,promocode=None):
+    def __init__(self,user_id,product_id,category_id,quantity,amt_paid=0,net_total=0,discount=0,promocode=None):
         self.user_id=user_id
         self.product_id=product_id
         self.category_id=category_id

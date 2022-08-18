@@ -20,15 +20,18 @@ class ItemData(Resource):
     def put(self):
         data=request.get_json()
         item=ItemModel.find_by_name(data['name'])
-        key_param=list(data.keys())
-        if('price' in key_param):
-            item.price=data['price']
-        if('rating' in key_param):
-            item.rating=data['rating']
-        if('item_count' in key_param):
-            item.item_count=data['item_count']
-        item.save_to_db()
-        return {'message':'Item updates successfully','data':item.json()},200
+        if item:
+            key_param=list(data.keys())
+            if('price' in key_param):
+                item.price=data['price']
+            if('rating' in key_param):
+                item.rating=data['rating']
+            if('item_count' in key_param):
+                item.item_count=data['item_count']
+            item.save_to_db()
+            return {'message':'Item updates successfully','data':item.json()},200
+        else:
+            return {'message':'Item not found'},400
 
 class SingleItem(Resource):
 
@@ -42,10 +45,14 @@ class SingleItem(Resource):
 
     #Single Item detail
     def get(self,name):
-        item=ItemModel.find_by_name(name)
-        if item:
-            return {'item':item.json()},200
-        return {'message':'Item not found'},400
+        try:
+            _id=int(name)
+            item=ItemModel.find_by_id(_id)
+            if item:
+                return {'item':item.json()},200
+            return {'message':'Item not found'},400
+        except:
+            return {'message':'Invalid input'},400
         
 
 class ItemList(Resource):
