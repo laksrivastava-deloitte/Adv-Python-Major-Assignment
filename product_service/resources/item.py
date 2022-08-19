@@ -1,6 +1,6 @@
 from flask_restful import Resource,request
 from models.item import ItemModel
-# from models.category import CategoryModel
+
 
 class ItemData(Resource):
 
@@ -31,7 +31,7 @@ class ItemData(Resource):
             item.save_to_db()
             return {'message':'Item updates successfully','data':item.json()},200
         else:
-            return {'message':'Item not found'},400
+            return {'message':'No Item found to update'},400
 
 class SingleItem(Resource):
 
@@ -51,7 +51,7 @@ class SingleItem(Resource):
             if item:
                 return {'item':item.json()},200
             return {'message':'Item not found'},400
-        except:
+        except Exception:
             return {'message':'Invalid input'},400
         
 
@@ -86,7 +86,7 @@ class ItemList(Resource):
                 return {'items':items},200
             else:
                 return {'message':'Invalid body input'},400
-        except:
+        except Exception:
             return {'message':'Invalid key value pair in body'},400
 
 class ReduceItemCount(Resource):

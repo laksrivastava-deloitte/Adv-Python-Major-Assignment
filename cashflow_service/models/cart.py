@@ -19,7 +19,6 @@ class CartModel(db.Model):
         self.product_id=product_id
         self.category_id=category_id
         self.quantity=quantity
-        # self.date_time=datetime.now()     
 
     @classmethod
     def find_by_userid_and_productid(cls,userid,productid):

@@ -74,7 +74,7 @@ class CategoryList(Resource):
                 return {'items':items},200
             else:
                 return {'message':'Invalid body input'},400
-        except:
+        except Exception:
             return {'message':'Invalid key value pair in body'},400
 
 

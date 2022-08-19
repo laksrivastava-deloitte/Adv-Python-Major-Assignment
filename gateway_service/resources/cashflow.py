@@ -139,9 +139,6 @@ class PaymentListUser(Resource):
 
         return response.json(),response.status_code
 
-class AllPayments(Resource):
-    def get(self):
-        pass
 
 
 

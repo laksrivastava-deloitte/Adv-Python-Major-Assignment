@@ -58,7 +58,7 @@ class UserModel(db.Model):
         try:
             data = jwt.decode(token,SECRET_KEY)
             current_user = UserModel.find_by_username(data['name'])
-        except:
+        except Exception:
             result['msg']={'message' : 'Token is invalid!'}, 401
             return result
 

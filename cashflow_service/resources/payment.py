@@ -20,6 +20,7 @@ class PaymentData(Resource):
             else:
                 info=f"Invalid Promocode {data['promocode']}"
                 data['promocode']=None
+                
         if(not promoapplied and 'promocode' not in data.keys()):
             max_amt=0
             discountpercent=0
