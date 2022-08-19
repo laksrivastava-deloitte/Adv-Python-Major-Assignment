@@ -1,0 +1,879 @@
+{
+	"info": {
+		"_postman_id": "fa0089d2-aae8-4e20-af06-29126aa0fb10",
+		"name": "Flask Major Assignment Gateway",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Only Admin Specific",
+			"item": [
+				{
+					"name": "All Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{gatewayServiceUrl}}/users",
+							"host": [
+								"{{gatewayServiceUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Gym\"\n}"
+						},
+						"url": {
+							"raw": "{{gatewayServiceUrl}}/createCategory",
+							"host": [
+								"{{gatewayServiceUrl}}"
+							],
+							"path": [
+								"createCategory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{gatewayServiceUrl}}/category/Gym",
+							"host": [
+								"{{gatewayServiceUrl}}"
+							],
+							"path": [
+								"category",
+								"Gym"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Item Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"delete10\",\n    \"item_count\": 1000,\n    \"rating\": 1,\n    \"price\": 3,\n    \"category_id\": 7\n}"
+						},
+						"url": {
+							"raw": "{{gatewayServiceUrl}}/newItem",
+							"host": [
+								"{{gatewayServiceUrl}}"
+							],
+							"path": [
+								"newItem"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Item",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"delete2\",\n    \"item_count\": 900,\n    \"rating\": 3,\n    \"price\": 3000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gatewayServiceUrl}}/newItem",
+							"host": [
+								"{{gatewayServiceUrl}}"
+							],
+							"path": [
+								"newItem"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Item",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gatewayServiceUrl}}/item/delete6",
+							"host": [
+								"{{gatewayServiceUrl}}"
+							],
+							"path": [
+								"item",
+								"delete6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Promo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"min_amount\":120,\n    \"max_amount\":500,\n    \"percentage\":0.25\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gatewayServiceUrl}}/promodata/super500",
+							"host": [
+								"{{gatewayServiceUrl}}"
+							],
+							"path": [
+								"promodata",
+								"super500"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Promo",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"min_amount\":80,\n    \"max_amount\":200,\n    \"percentage\":0.19\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gatewayServiceUrl}}/promodata/super500",
+							"host": [
+								"{{gatewayServiceUrl}}"
+							],
+							"path": [
+								"promodata",
+								"super500"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Promo",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gatewayServiceUrl}}/promodata/super500",
+							"host": [
+								"{{gatewayServiceUrl}}"
+							],
+							"path": [
+								"promodata",
+								"super500"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "All Loggedin User",
+			"item": [
+				{
+					"name": "Update Password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\":\"abcd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gatewayServiceUrl}}/register",
+							"host": [
+								"{{gatewayServiceUrl}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gatewayServiceUrl}}/register",
+							"host": [
+								"{{gatewayServiceUrl}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{gatewayServiceUrl}}/category/7",
+							"host": [
+								"{{gatewayServiceUrl}}"
+							],
+							"path": [
+								"category",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Categories",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{gatewayServiceUrl}}/categories",
+							"host": [
+								"{{gatewayServiceUrl}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All item with sort and filter",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sortBy\":\"price\",\n    \"sortDescending\":true,\n    \"filterBy\":\"item_count\",\n    \"filterValue\":7,\n    \"category\":\"Grocery\"\n}"
+						},
+						"url": {
+							"raw": "{{gatewayServiceUrl}}/categories",
+							"host": [
+								"{{gatewayServiceUrl}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Item",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gatewayServiceUrl}}/item/1",
+							"host": [
+								"{{gatewayServiceUrl}}"
+							],
+							"path": [
+								"item",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insert Item in cart",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"product_id\":4,\n    \"quantity\":14\n}"
+						},
+						"url": {
+							"raw": "{{gatewayServiceUrl}}/cartdata",
+							"host": [
+								"{{gatewayServiceUrl}}"
+							],
+							"path": [
+								"cartdata"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Items of cart",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default",
+								"disabled": true
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{gatewayServiceUrl}}/cartdata",
+							"host": [
+								"{{gatewayServiceUrl}}"
+							],
+							"path": [
+								"cartdata"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete all Items of cart",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default",
+								"disabled": true
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{gatewayServiceUrl}}/cartdata",
+							"host": [
+								"{{gatewayServiceUrl}}"
+							],
+							"path": [
+								"cartdata"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get single Item of cart",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default",
+								"disabled": true
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{gatewayServiceUrl}}/cartdata/5",
+							"host": [
+								"{{gatewayServiceUrl}}"
+							],
+							"path": [
+								"cartdata",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete single Item of cart",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default",
+								"disabled": true
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{gatewayServiceUrl}}/cartdata/5",
+							"host": [
+								"{{gatewayServiceUrl}}"
+							],
+							"path": [
+								"cartdata",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Promos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gatewayServiceUrl}}/promolist",
+							"host": [
+								"{{gatewayServiceUrl}}"
+							],
+							"path": [
+								"promolist"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cart Checkout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default",
+								"disabled": true
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"promocode\": \"super500\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gatewayServiceUrl}}/makePayment",
+							"host": [
+								"{{gatewayServiceUrl}}"
+							],
+							"path": [
+								"makePayment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payment History",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default",
+								"disabled": true
+							},
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{gatewayServiceUrl}}/myPayments",
+							"host": [
+								"{{gatewayServiceUrl}}"
+							],
+							"path": [
+								"myPayments"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Registration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"Ladmin\",\n    \"password\": \"abcd1234\",\n    \"is_admin\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{gatewayServiceUrl}}/register",
+					"host": [
+						"{{gatewayServiceUrl}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = JSON.parse(responseBody);",
+							"",
+							"let token = response.token;",
+							"",
+							"pm.collectionVariables.set(\"TOKEN\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"Ladmin\",\n    \"password\": \"abcd1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{gatewayServiceUrl}}/login",
+					"host": [
+						"{{gatewayServiceUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "gatewayServiceUrl",
+			"value": "http://127.0.0.1:5004"
+		},
+		{
+			"key": "TOKEN",
+			"value": ""
+		}
+	]
+}

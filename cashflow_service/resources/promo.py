@@ -32,7 +32,7 @@ class PromoData(Resource):
         if(promo_item):
             promo_item.delete_to_db()
             return {'message':'promo deleted successfully'},200
-        return {'message':'promo not found'}
+        return {'message':'promo not found'},400
 
 class PromoList(Resource):
     #All promos
