@@ -8,6 +8,7 @@ from db import db
 from resources.cart import CartData,CartDataList,CartSingleItem
 from resources.payment import PaymentData,PaymentDataList,SinglePayment
 from resources.payment_child import PaymentDataChild
+from resources.promo import PromoData,PromoList
 
 
 app = Flask(__name__)
@@ -40,6 +41,8 @@ api.add_resource(PaymentData,'/paymentdata')
 api.add_resource(PaymentDataList,'/paymentdata/<int:user_id>')
 api.add_resource(PaymentDataChild,'/paymentdatachild')
 api.add_resource(SinglePayment,'/singlepayment/<int:_id>')
+api.add_resource(PromoData,'/promodata/<string:name>')
+api.add_resource(PromoList,'/promolist')
 
 
 

@@ -77,14 +77,14 @@ class CartSingleItem(Resource):
 
 class MakePayment(Resource):
 
-    def get(self):
+    def post(self):
         #Check user is valid or not    user_response['value']['id]==>user_id
         user_response=Validate.user(request)
         if(not user_response['pass']):
             return user_response['value']
 
         #List of all the added items in cart
-        response=MicroService.execute("GET",CartDataList.url.format(user_response['value']['id']),request.headers)
+        response=MicroService.execute_get(CartDataList.url.format(user_response['value']['id']))
         item_list=response.json()["cart items"]
         print(item_list)
         
@@ -103,9 +103,8 @@ class MakePayment(Resource):
             if(itemjson['quantity']>item_response['value']['item']['item_count']):
                 return {'message':f"{item_response['value']['item']['name']} has {item_response['value']['item']['item_count']} quantity only","advice":f"Please decrease the quantity from {itemjson['quantity']} to below max limit"},400
 
-        #create payment       gives payment_id
-        headers = {'Content-Type': 'application/json'}
-        response_payment = requests.request("GET", config.Cashflow_Server_Url+"/paymentdata", headers=headers, data=json.dumps({"user_id": user_response['value']['id'], "net_total": net_total}))
+        response_payment=MicroService.execute_post(config.Cashflow_Server_Url+"/paymentdata",{"user_id": user_response['value']['id'], "net_total": net_total,**request.get_json()})
+        info=response_payment.json()['info']
         payment_id=response_payment.json()['data']['payment_id']
 
 
@@ -114,9 +113,9 @@ class MakePayment(Resource):
         for itemjson in item_list:
             i+=1
             data={"item_id":itemjson['product_id'],"payment_id":payment_id,"price":pricesList[i],"quantity":itemjson['quantity'],"category_id":itemjson['category_id']}
-            requests.request("POST", config.Cashflow_Server_Url+"/paymentdatachild", headers=headers, data=json.dumps(data))
+            MicroService.execute_post(config.Cashflow_Server_Url+"/paymentdatachild",data)
             #Reduce Item count
-            requests.request("GET", config.Product_Server_Url+"/decreaseItemCount/{}/{}".format(itemjson['product_id'],itemjson['quantity']), headers=headers,data="")
+            MicroService.execute_get(config.Product_Server_Url+"/decreaseItemCount/{}/{}".format(itemjson['product_id'],itemjson['quantity']))
 
 
         #clearing cart
@@ -125,7 +124,9 @@ class MakePayment(Resource):
         #single payment result
         single_payemnt_response=MicroService.execute("GET",config.Cashflow_Server_Url+'/singlepayment/{}'.format(payment_id),request.headers,data)
 
-        return single_payemnt_response.json(),single_payemnt_response.status_code
+        result=single_payemnt_response.json()
+        result['info']=info
+        return result,single_payemnt_response.status_code
 
 
 class PaymentListUser(Resource):

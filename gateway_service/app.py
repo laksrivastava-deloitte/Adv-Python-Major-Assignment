@@ -6,6 +6,7 @@ from flask import g
 from resources.user import  UserData,UserList,UserLogin
 from resources.product import CategoryData,CategoryList,SingleCategory,ItemData,SingleItem,ItemList,ReduceItemCount
 from resources.cashflow import CartData,CartDataList,CartSingleItem,MakePayment,PaymentListUser,AllPayments
+from resources.promo import PromoData,PromoList
 # from resource.product
 
 
@@ -43,6 +44,9 @@ api.add_resource(CartSingleItem,'/cartdata/<int:product_id>')
 api.add_resource(MakePayment,'/makePayment')
 api.add_resource(PaymentListUser,'/myPayments')
 api.add_resource(AllPayments,'/allPayments')
+
+api.add_resource(PromoData,'/promodata/<string:name>')
+api.add_resource(PromoList,'/promolist')
 
 if __name__=='__main__':
     app.run(port=5004, debug=True)

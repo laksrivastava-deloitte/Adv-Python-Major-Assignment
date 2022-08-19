@@ -2,7 +2,7 @@ import json
 import requests
 class MicroService:
     @staticmethod
-    def execute(request_type,url,header,data=None):
+    def  execute(request_type,url,header,data=None):
 
         #header setup
         dict_header={}
@@ -20,4 +20,14 @@ class MicroService:
             response = requests.request(request_type, url, headers=dict_header)
         return response
 
+    @staticmethod
+    def execute_get(url):
+        response = requests.request("GET", url)
+        return response
+
+    @staticmethod
+    def execute_post(url,data):
+        headers = {'Content-Type': 'application/json'}
+        response = requests.request("POST", url,headers=headers,data=json.dumps(data))
+        return response
 
