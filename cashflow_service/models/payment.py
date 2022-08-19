@@ -1,12 +1,13 @@
 from db import db
-from sqlalchemy.sql import func
+from datetime import datetime
+import pytz
 
 class PaymentModel(db.Model):
     __tablename__='payment'
 
     payment_id=db.Column(db.Integer,primary_key=True)
     user_id=db.Column(db.Integer)
-    date_time=db.Column(db.DateTime(timezone=True),server_default=func.now())
+    date_time=db.Column(db.DateTime)
     net_total=db.Column(db.Integer)
     amt_paid=db.Column(db.Integer)
     discount=db.Column(db.Float)
@@ -21,9 +22,10 @@ class PaymentModel(db.Model):
         self.discount=discount
         self.amt_paid=amt_paid
         self.promocode=promocode
+        self.date_time=datetime.now(pytz.timezone('Asia/Kolkata'))
 
     def json(self):
-        return {'payment_id':self.payment_id,'user_id':self.user_id,'data_time':str(self.date_time),'amt_paid':self.amt_paid,'net_total':self.net_total,'discount':self.discount,'promocode':self.promocode}
+        return {'payment_id':self.payment_id,'user_id':self.user_id,'data_time':str(self.date_time.strftime("%d-%m-%Y %I:%M %p")),'amt_paid':self.amt_paid,'net_total':self.net_total,'discount':self.discount,'promocode':self.promocode}
 
     @classmethod
     def find_by_paymentid(cls,payment_id):

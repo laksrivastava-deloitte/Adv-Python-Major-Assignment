@@ -1,5 +1,6 @@
 from db import db
-from sqlalchemy.sql import func
+from datetime import datetime
+import pytz
 
 
 class CartModel(db.Model):
@@ -10,7 +11,7 @@ class CartModel(db.Model):
     user_id=db.Column(db.Integer)
     product_id=db.Column(db.Integer)
     category_id=db.Column(db.Integer)
-    date_time=db.Column(db.DateTime(timezone=True),server_default=func.now() )
+    date_time=db.Column(db.DateTime)
     quantity=db.Column(db.Integer)
     
     
@@ -19,6 +20,7 @@ class CartModel(db.Model):
         self.product_id=product_id
         self.category_id=category_id
         self.quantity=quantity
+        self.date_time=datetime.now(pytz.timezone('Asia/Kolkata'))
 
     @classmethod
     def find_by_userid_and_productid(cls,userid,productid):
@@ -42,5 +44,5 @@ class CartModel(db.Model):
         db.session.commit()
 
     def json(self):
-        return {'id':self.id,'user_id':self.user_id,'product_id':self.product_id,'category_id':self.category_id,'date_time':str(self.date_time),'quantity':self.quantity}
+        return {'id':self.id,'user_id':self.user_id,'product_id':self.product_id,'category_id':self.category_id,'date_time':str(self.date_time.strftime("%d-%m-%Y %I:%M %p")),'quantity':self.quantity}
 
