@@ -1,3 +1,4 @@
+from glob import glob
 import unittest
 import requests
 import json
@@ -10,7 +11,11 @@ header = {
 test_user = {"username": "test_user", "password": "test_password", "is_admin": True}
 test_category = ""
 test_item = ""
+test_promo=""
+test_cartitem=""
+test_payment=""
 register = "/register"
+promo_name="super10"
 
 
 def execute(request_type, url, header=header, data={}):
@@ -198,11 +203,119 @@ class Test3_CashFlow(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
         test_item = response.json()['data']
 
+
+    def test_17_Create_promo(self):
+        #create promo
+        data={"min_amount":5,"max_amount":30,"percentage":0.02}
+        response = execute("POST", url_gateway+'/promodata/'+promo_name, header, data)
+        self.assertEqual(response.json()['result']['name'],promo_name)
+        self.assertEqual(response.json()['result']['min_amount'],5)
+        self.assertEqual(response.json()['result']['max_amount'],30)
+
+        #recreate promo
+        response = execute("POST", url_gateway+'/promodata/'+promo_name, header, data)
+        self.assertEqual(response.status_code,406)
+
+    def test_18_Update_promo(self):
+        global test_promo
+        data={"min_amount":10,"max_amount":40,"percentage":0.03}
+        response = execute("PUT", url_gateway+'/promodata/'+promo_name, header, data)
+        self.assertEqual(response.json()['result']['name'],promo_name)
+        self.assertEqual(response.json()['result']['min_amount'],10)
+        self.assertEqual(response.json()['result']['max_amount'],40)
+        test_promo=response.json()['result']
+
+    def test_19_All_promo(self):
+        global test_promo
+        response = execute("GET", url_gateway+'/promolist', header)
+        j=-1
+        for i in response.json()['promocodes']:
+            j+=1
+            if i['name']==promo_name:
+                break
+        self.assertEqual(response.status_code,200)
+        self.assertDictEqual(response.json()['promocodes'][j],test_promo)
+
+
+    def test_20_Insert_in_cart(self):
+        global test_item
+        global test_user
+        global test_cartitem
+        data={"product_id":test_item['id'],"quantity":5}
+        response = execute("POST", url_gateway+'/cartdata', header,data)
+        self.assertEqual(response.status_code,201)
+        self.assertEqual(response.json()['data']['category_id'],test_item['category_id'])
+        self.assertEqual(response.json()['data']['product_id'],test_item['id'])
+        self.assertEqual(response.json()['data']['quantity'],5)
+        test_cartitem=response.json()['data']
+
+    def test_21_All_Cart_items(self):
+        global test_cartitem
+        response = execute("GET", url_gateway+'/cartdata', header)
+        self.assertEqual(response.status_code,200)
+        self.assertDictEqual(response.json()['cart items'][0],test_cartitem)
+
+    def test_22_Get_single_cart_item(self):
+        global test_item
+        global test_cartitem
+        response = execute("GET", url_gateway+'/cartdata/'+str(test_item['id']), header)
+        self.assertEqual(response.status_code,200)
+        self.assertDictEqual(response.json()['cart item'],test_cartitem)
+
+    def test_23_Delete_single_cart_item(self):
+        global test_item
+        global test_cartitem
+        #Delete single item
+        response = execute("DELETE", url_gateway+'/cartdata/'+str(test_item['id']), header)
+        self.assertEqual(response.status_code,200)
     
+    def test_24_Delete_all_cart_item(self):
+        #Insert item in cart
+        data={"product_id":test_item['id'],"quantity":5}
+        execute("POST", url_gateway+'/cartdata', header,data)
+
+        #Delete all cart item
+        response = execute("DELETE", url_gateway+'/cartdata', header)
+        self.assertEqual(response.status_code,200)
+
+        #Re-Delete all cart item
+        response = execute("DELETE", url_gateway+'/cartdata', header)
+        self.assertEqual(response.status_code,200)
+
+    def test_25_Cart_checkout(self):
+        global test_cartitem
+        global test_item
+        global test_payment
+
+        #Insert item in cart
+        data={"product_id":test_item['id'],"quantity":5}
+        response=execute("POST", url_gateway+'/cartdata', header,data)
+        test_cartitem=response.json()['data']
+
+        #Cart Checkout
+        response=execute("POST", url_gateway+'/makePayment', header,{"promocode":promo_name})
+        self.assertEqual(response.status_code,200)
+        self.assertEqual(response.json()['data']['promocode'],promo_name)
+        self.assertEqual(response.json()['data']['items'][0]['item_id'],test_item['id'])
+        test_payment=response.json()['data']
 
 
+    def test_26_Payment_history(self):
+        global test_payment
+        response=execute("GET", url_gateway+'/myPayments', header)
+        self.assertEqual(response.status_code,200)
+        self.assertDictEqual(response.json()['payment items'][len(response.json()['payment items'])-1],test_payment)
 
-    def test_30_User_category_item_end(self):
+    def test_27_Delete_promo(self):
+        #delete promo
+        response = execute("Delete", url_gateway+'/promodata/'+promo_name, header)
+        self.assertEqual(response.status_code,200)
+
+        #re-delete promo
+        response = execute("Delete", url_gateway+'/promodata/'+promo_name, header)
+        self.assertEqual(response.status_code,406)
+
+    def test_28_User_category_item_end(self):
         # delete category
         response = execute("DELETE", url_gateway +'/category/'+test_category['name'], header)
         self.assertEqual(response.status_code, 200)
