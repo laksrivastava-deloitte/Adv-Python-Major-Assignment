@@ -1,0 +1,937 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "description": "Created By: Lakshya Srivastava",
+        "version": "1.0.0",
+        "title": "Advanced Python(Flask) present HashKart",
+        "license": {
+            "name": "GIT Repo Link",
+            "url": "https://github.com/laksrivastava-deloitte/Adv-Python-Major-Assignment"
+        }
+    },
+    "servers": [
+        {
+            "url": "/"
+        }
+    ],
+    "tags": [
+        {
+            "name": "User",
+            "description": "Request related to user and admin"
+        }
+    ],
+    "paths": {
+        "/register": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create New User",
+                "requestBody": {
+                    "description": "User Post Object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/userResgistration"
+                            }
+                        }
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "User created successfully",
+                        "schema": {
+                            "$ref": "#/components/schemas/userResgistration"
+                        }
+                    },
+                    "406": {
+                        "description": "A user with that username already exists"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update password",
+                "parameters": [
+                    {
+                        "name": "X-ACCESS-TOKEN",
+                        "type": "string",
+                        "in": "header",
+                        "required": true,
+                        "description": "access token"
+                    }
+                ],
+                "requestBody": {
+                    "description": "User Post Object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/updatePassword"
+                            }
+                        }
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "schema": {
+                            "$ref": "#/components/schemas/updatePassword"
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid token"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Delete User",
+                "parameters": [
+                    {
+                        "name": "X-ACCESS-TOKEN",
+                        "type": "string",
+                        "in": "header",
+                        "required": true,
+                        "description": "access token"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User Deleted Successfully"
+                    },
+                    "401": {
+                        "description": "Invalid token"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Login with username and password",
+                "requestBody": {
+                    "description": "User Post Object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/userLogin"
+                            }
+                        }
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "access token",
+                        "schema": {
+                            "$ref": "#/components/schemas/userLogin"
+                        }
+                    },
+                    "406": {
+                        "description": "Invalid Credentials"
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "All available users in the system",
+                "parameters": [
+                    {
+                        "name": "X-ACCESS-TOKEN",
+                        "type": "string",
+                        "in": "header",
+                        "required": true,
+                        "description": "access token"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "401": {
+                        "description": "Only for admins"
+                    }
+                }
+            }
+        },
+        "/createCategory": {
+            "post": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Create new category",
+                "parameters": [
+                    {
+                        "name": "X-ACCESS-TOKEN",
+                        "type": "string",
+                        "in": "header",
+                        "required": true,
+                        "description": "access token"
+                    }
+                ],
+                "requestBody": {
+                    "description": "category name",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/categoryCreate"
+                            }
+                        }
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Category created successfully",
+                        "schema": {
+                            "$ref": "#/components/schemas/userLogin"
+                        }
+                    },
+                    "406": {
+                        "description": "Category already exits"
+                    }
+                }
+            }
+        },
+        "/category/{id}": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Get single category",
+                "parameters": [
+                    {
+                        "name": "X-ACCESS-TOKEN",
+                        "type": "string",
+                        "in": "header",
+                        "required": true,
+                        "description": "access token"
+                    },
+                    {
+                        "name": "id",
+                        "type": "integer",
+                        "in": "path",
+                        "required": true,
+                        "description": "item id"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "401": {
+                        "description": "Only for admins"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Delete category",
+                "parameters": [
+                    {
+                        "name": "X-ACCESS-TOKEN",
+                        "type": "string",
+                        "in": "header",
+                        "required": true,
+                        "description": "access token"
+                    },
+                    {
+                        "name": "id",
+                        "type": "string",
+                        "in": "path",
+                        "required": true,
+                        "description": "category name"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    },
+                    "401": {
+                        "description": "Only for admins"
+                    }
+                }
+            }
+        },
+        "/categories": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Get all category",
+                "parameters": [
+                    {
+                        "name": "X-ACCESS-TOKEN",
+                        "type": "string",
+                        "in": "header",
+                        "required": true,
+                        "description": "access token"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "All category"
+                    },
+                    "401": {
+                        "description": "Only for admins"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Item"
+                ],
+                "summary": "Filter and Sort items",
+                "parameters": [
+                    {
+                        "name": "X-ACCESS-TOKEN",
+                        "type": "string",
+                        "in": "header",
+                        "required": true,
+                        "description": "access token"
+                    }
+                ],
+                "requestBody": {
+                    "description": "category name",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/filterItems"
+                            }
+                        }
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "406": {
+                        "description": "Category already exits"
+                    }
+                }
+            }
+        },
+        "/newItem": {
+            "post": {
+                "tags": [
+                    "Item"
+                ],
+                "summary": "Create new item",
+                "parameters": [
+                    {
+                        "name": "X-ACCESS-TOKEN",
+                        "type": "string",
+                        "in": "header",
+                        "required": true,
+                        "description": "access token"
+                    }
+                ],
+                "requestBody": {
+                    "description": "category name",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/categoryItem"
+                            }
+                        }
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Item created successfully"
+                    },
+                    "406": {
+                        "description": "Category already exits"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Item"
+                ],
+                "summary": "Create new item",
+                "parameters": [
+                    {
+                        "name": "X-ACCESS-TOKEN",
+                        "type": "string",
+                        "in": "header",
+                        "required": true,
+                        "description": "access token"
+                    }
+                ],
+                "requestBody": {
+                    "description": "category data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/updateItem"
+                            }
+                        }
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Item updated successfully"
+                    },
+                    "406": {
+                        "description": "Category already exits"
+                    }
+                }
+            }
+        },
+        "/item/{item_name}": {
+            "delete": {
+                "tags": [
+                    "Item"
+                ],
+                "summary": "Delete item",
+                "parameters": [
+                    {
+                        "name": "X-ACCESS-TOKEN",
+                        "type": "string",
+                        "in": "header",
+                        "required": true,
+                        "description": "access token"
+                    },
+                    {
+                        "name": "item_name",
+                        "type": "string",
+                        "in": "path",
+                        "required": true,
+                        "description": "access token"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Item created successfully"
+                    },
+                    "406": {
+                        "description": "Category already exits"
+                    }
+                }
+            }
+        },
+        "/promolist":{
+            "get": {
+                "tags": [
+                    "Promo"
+                ],
+                "summary": "Get all Promos",
+                "parameters": [
+                    {
+                        "name": "X-ACCESS-TOKEN",
+                        "type": "string",
+                        "in": "header",
+                        "required": true,
+                        "description": "access token"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Only for admins"
+                    }
+                }
+            }
+        },
+        "/promodata/{promoname}": {
+            "post": {
+                "tags": [
+                    "Promo"
+                ],
+                "summary": "Create Promo",
+                "parameters": [
+                    {
+                        "name": "X-ACCESS-TOKEN",
+                        "type": "string",
+                        "in": "header",
+                        "required": true,
+                        "description": "access token"
+                    },
+                    {
+                        "name": "promoname",
+                        "type": "string",
+                        "in": "path",
+                        "required": true,
+                        "description": "promo name"
+                    }
+                ],
+                "requestBody": {
+                    "description": "cart data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/createPromo"
+                            }
+                        }
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Only for admins"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Promo"
+                ],
+                "summary": "Update Promo",
+                "parameters": [
+                    {
+                        "name": "X-ACCESS-TOKEN",
+                        "type": "string",
+                        "in": "header",
+                        "required": true,
+                        "description": "access token"
+                    },
+                    {
+                        "name": "promoname",
+                        "type": "string",
+                        "in": "path",
+                        "required": true,
+                        "description": "promo name"
+                    }
+                ],
+                "requestBody": {
+                    "description": "cart data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/createPromo"
+                            }
+                        }
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Only for admins"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Promo"
+                ],
+                "summary": "Delete promo",
+                "parameters": [
+                    {
+                        "name": "X-ACCESS-TOKEN",
+                        "type": "string",
+                        "in": "header",
+                        "required": true,
+                        "description": "access token"
+                    },
+                    {
+                        "name": "promoname",
+                        "type": "string",
+                        "in": "path",
+                        "required": true,
+                        "description": "promo name"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Only for admins"
+                    }
+                }
+            }
+        },
+        "/cartdata": {
+            "post": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "Insert in cart",
+                "parameters": [
+                    {
+                        "name": "X-ACCESS-TOKEN",
+                        "type": "string",
+                        "in": "header",
+                        "required": true,
+                        "description": "access token"
+                    }
+                ],
+                "requestBody": {
+                    "description": "cart data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/cartData"
+                            }
+                        }
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Only for admins"
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "Get all cart item",
+                "parameters": [
+                    {
+                        "name": "X-ACCESS-TOKEN",
+                        "type": "string",
+                        "in": "header",
+                        "required": true,
+                        "description": "access token"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Only for admins"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "Delete all cart items",
+                "parameters": [
+                    {
+                        "name": "X-ACCESS-TOKEN",
+                        "type": "string",
+                        "in": "header",
+                        "required": true,
+                        "description": "access token"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Only for admins"
+                    }
+                }
+            }
+        },
+        "/makePayment": {
+            "post": {
+                "tags": [
+                    "Payment"
+                ],
+                "summary": "Cart checkout",
+                "parameters": [
+                    {
+                        "name": "X-ACCESS-TOKEN",
+                        "type": "string",
+                        "in": "header",
+                        "required": true,
+                        "description": "access token"
+                    }
+                ],
+                "requestBody": {
+                    "description": "make payment",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/makePayment"
+                            }
+                        }
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "ok"
+                    },
+                    "401": {
+                        "description": "Only for admins"
+                    }
+                }
+            }},
+            "/myPayments": {
+                "get": {
+                    "tags": [
+                        "Payment"
+                    ],
+                    "summary": "All Payments",
+                    "parameters": [
+                        {
+                            "name": "X-ACCESS-TOKEN",
+                            "type": "string",
+                            "in": "header",
+                            "required": true,
+                            "description": "access token"
+                        }
+                    ],
+                    "produces": [
+                        "application/json"
+                    ],
+                    "responses": {
+                        "201": {
+                            "description": "ok"
+                        },
+                        "401": {
+                            "description": "Only for admins"
+                        }
+                    
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "userResgistration": {
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "is_admin": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "userLogin": {
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string",
+                        "format": "string"
+                    }
+                }
+            },
+            "updatePassword": {
+                "type": "object",
+                "properties": {
+                    "password": {
+                        "type": "string",
+                        "format": "string"
+                    }
+                }
+            },
+            "categoryCreate": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "format": "string"
+                    }
+                }
+            },
+            "categoryItem": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "item_count": {
+                        "type": "integer",
+                        "format": "string"
+                    },
+                    "rating": {
+                        "type": "integer",
+                        "format": "string"
+                    },
+                    "price": {
+                        "type": "integer",
+                        "format": "string"
+                    },
+                    "category_id": {
+                        "type": "integer",
+                        "format": "string"
+                    }
+                }
+            },
+            "updateItem": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "item_count": {
+                        "type": "integer",
+                        "format": "string"
+                    },
+                    "rating": {
+                        "type": "integer",
+                        "format": "string"
+                    },
+                    "price": {
+                        "type": "integer",
+                        "format": "string"
+                    }
+                }
+            },
+            "filterItems": {
+                "type": "object",
+                "properties": {
+                    "sortBy": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "sortDescending": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "filterBy": {
+                        "type": "string",
+                        "format": "string"
+                    },
+                    "filterValue": {
+                        "type": "integer",
+                        "format": "string"
+                    },
+                    "category": {
+                        "type": "string",
+                        "format": "string"
+                    }
+                }
+            },
+            "createPromo": {
+                "type": "object",
+                "properties": {
+                    "min_amount": {
+                        "type": "integer",
+                        "format": "string"
+                    },
+                    "max_amount": {
+                        "type": "integer",
+                        "format": "string"
+                    },
+                    "percentage": {
+                        "type": "float",
+                        "format": "string"
+                    }
+                }
+            },
+            "cartData": {
+                "type": "object",
+                "properties": {
+                    "product_id": {
+                        "type": "integer",
+                        "format": "string"
+                    },
+                    "quantity": {
+                        "type": "integer",
+                        "format": "string"
+                    }
+                }
+            },
+            "makePayment": {
+                "type": "object",
+                "properties": {
+                    "promocode": {
+                        "type": "string",
+                        "format": "string"
+                    }
+                }
+            }
+        }
+    }
+}
